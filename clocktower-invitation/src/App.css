@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Nanum+Myeongjo:wght@400;700&family=Pirata+One&display=swap');
+
+.App {
+  text-align: center;
+  background-color: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000&auto=format&fit=crop'); /* 어두운 고딕 건축물/시계탑 이미지 */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.folded-container {
+  cursor: pointer;
+  perspective: 1000px;
+  transition: transform 0.3s ease;
+}
+
+.folded-container:hover {
+  transform: scale(1.05);
+}
+
+.folded-content {
+  background: rgba(20, 20, 20, 0.85);
+  padding: 60px 40px;
+  border-radius: 5px;
+  border: 2px solid #8a0303;
+  box-shadow: 0 0 30px rgba(138, 3, 3, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.folded-content::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 1px solid #5a0202;
+  margin: 5px;
+  pointer-events: none;
+}
+
+.unfolded-container {
+  animation: unfold 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 90%;
+  max-width: 700px;
+}
+
+.unfolded-content {
+  background: #f4f1ea; /* 오래된 종이 질감 느낌 */
+  color: #1a1a1a;
+  padding: 50px 40px;
+  border-radius: 2px;
+  border: 1px solid #d4af37; /* 금색 테두리 */
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0,0,0,0.05);
+  position: relative;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* 종이 질감 패턴 */
+}
+
+@keyframes unfold {
+  from {
+    opacity: 0;
+    transform: rotateX(-30deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+}
