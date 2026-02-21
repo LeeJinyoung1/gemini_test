@@ -7,26 +7,30 @@ const FoldedInvitation = ({ onUnfold }) => {
   return (
     <div className="folded-container" onClick={onUnfold}>
       <div className="folded-content">
-        <div style={{ position: 'absolute', top: '15px', right: '15px', opacity: 0.15 }}>
-          <span style={{ fontSize: '40px', color: '#5a0202', filter: 'blur(0.5px)' }}>📜</span>
+        <div className="envelope-flap-wrapper">
+          <div className="envelope-flap"></div>
         </div>
-        <h1 style={{ 
+        <div className="letter-paper"></div> {/* Added letter paper element */}
+        <div className="envelope-front"></div> {/* Added envelope front panel to hide bottom of paper */}
+        <h1 className="invitation-title" style={{ 
           fontFamily: "'Nanum Myeongjo', serif", 
           letterSpacing: '2px', 
-          color: '#8a0303', 
-          fontSize: '2.8rem', 
-          marginBottom: '20px',
-          fontWeight: '700'
+          color: '#5a0202', /* Slightly darker red for better contrast */
+          fontSize: '1.5rem', /* Reduced font size */
+          marginTop: '15px',
+          marginBottom: '5px',
+          fontWeight: '700',
+          textShadow: '0 1px 2px rgba(255,255,255,0.8)'
         }}>시계탑에 흐른 피</h1>
         
-        {/* 중앙에 위치한 실링 왁스 이미지 */}
-        <div style={{ margin: '20px 0', zIndex: 1, display: 'flex', justifyContent: 'center' }}>
+        {/* 중앙에 위치한 실링 왁스 이미지 - 봉투 덮개 끝부분(중앙 아래쪽)에 위치하도록 조정 */}
+        <div className="seal-container" style={{ margin: '8px 0 15px 0', zIndex: 5, display: 'flex', justifyContent: 'center' }}>
           <div style={{ 
-            width: '130px', 
-            height: '130px', 
+            width: '80px', /* Reduced size */
+            height: '80px', /* Reduced size */
             borderRadius: '50%', 
             overflow: 'hidden',
-            filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.5))',
+            filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.4))', /* Softer shadow */
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -45,7 +49,7 @@ const FoldedInvitation = ({ onUnfold }) => {
           </div>
         </div>
 
-        <p style={{ color: '#5a0202', fontWeight: 'bold', fontSize: '1.1rem', letterSpacing: '1px', fontStyle: 'italic', marginTop: '10px' }}>
+        <p className="invitation-text" style={{ color: '#5a0202', fontWeight: 'bold', fontSize: '0.9rem', letterSpacing: '1px', fontStyle: 'italic', marginTop: '8px' }}>
           초대장을 클릭하여 열어보세요
         </p>
       </div>

@@ -33,24 +33,141 @@
 
 .folded-content {
   background-color: #f4f1ea;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
-    url('https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=1000&auto=format&fit=crop'); /* Realistic old paper texture */
-  background-size: cover;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* Consistent paper texture */
+  background-size: auto; /* Default for pattern */
   background-position: center;
-  padding: 80px 60px;
-  border-radius: 3px;
-  border: none;
+  width: 400px; /* Reduced width */
+  max-width: 90vw;
+  aspect-ratio: 1.5;
+  padding: 30px; /* Reduced padding */
+  border-radius: 4px;
+  border: 1px solid rgba(139, 69, 19, 0.3); /* Subtle brown border */
   box-shadow: 
     0 15px 35px rgba(0, 0, 0, 0.5),
-    inset 0 0 50px rgba(0, 0, 0, 0.1);
+    inset 0 0 60px rgba(0, 0, 0, 0.15); /* Adjusted shadow */
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; Removed to allow flap to open */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 320px;
+  perspective: 1000px; /* Enable 3D space */
+  transform-style: preserve-3d;
+}
+
+.letter-paper {
+  position: absolute;
+  top: 15px; /* Sits slightly inside from the top edge */
+  left: 5%;
+  width: 90%;
+  height: 85%; /* Slightly shorter than envelope */
+  background-color: #fffdf7;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Stronger shadow */
+  z-index: 1; /* Below front (3) and flap (4) */
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.05);
+  transform-origin: bottom;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+  opacity: 0; /* Initially hidden */
+}
+
+.folded-container:hover .letter-paper {
+  transform: translateY(-50px); /* Slide up slightly to stick out */
+  z-index: 2; /* Still below front (3) but above back */
+  opacity: 1; /* Show when hovering */
+}
+
+.envelope-front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Cover the entire front */
+  background-color: #f4f1ea;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  z-index: 3; /* Above letter-paper (1, 2) but below flap (4) initially */
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.envelope-flap-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 58%;
+  z-index: 4;
+  pointer-events: none;
+  /* 부드러운 그림자로 자연스러운 접힘선 표현 */
+  filter: 
+    drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2))
+    drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+  
+  transform-origin: top;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.6s step-end;
+}
+
+.envelope-flap {
+  width: 100%;
+  height: 100%;
+  /* 덮개에 미세한 그라데이션을 주어 입체감 부여 */
+  background: 
+    linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.05) 100%),
+    #f4f1ea;
+  background-image: 
+    linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.05) 100%),
+    url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.folded-container:hover .envelope-flap-wrapper {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+/* 기존 불필요한 스타일 제거 */
+.envelope-flap {
+  transform-origin: top;
+}
+
+/* Animate Content (Title, Seal) to fade out */
+.invitation-title, .seal-container {
+  transition: opacity 0.3s;
+  z-index: 5; /* Clearly above the flap (z-index: 1) */
+  position: relative;
+}
+
+/* Move content up/fade out on hover to simulate being on the flap */
+.folded-container:hover .invitation-title,
+.folded-container:hover .seal-container {
+  opacity: 0; /* Fade out only title and seal */
+}
+
+/* Keep text visible and positioned */
+.invitation-text {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+  z-index: 5;
+  position: relative;
+  /* Ensure it stays visible */
+}
+
+/* Bottom/Side Folds Simulation */
+.folded-content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5; /* Below flap, above background */
+  pointer-events: none;
+}
+
+/* Ensure text and seal are above the envelope effects */
+.folded-content > * {
+  /* position: relative;  Removed to avoid conflict with specific classes */
+  /* z-index: 2; */
 }
 
 .unfolded-container {
@@ -64,7 +181,7 @@
   color: #1a1a1a;
   padding: 50px 40px;
   border-radius: 2px;
-  border: 1px solid #d4af37; /* 금색 테두리 */
+  border: none;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0,0,0,0.05);
   position: relative;
   background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* 종이 질감 패턴 */
