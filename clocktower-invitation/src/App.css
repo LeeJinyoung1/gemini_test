@@ -32,22 +32,25 @@
 }
 
 .folded-content {
-  background: rgba(20, 20, 20, 0.85);
-  padding: 60px 40px;
-  border-radius: 5px;
-  border: 2px solid #8a0303;
-  box-shadow: 0 0 30px rgba(138, 3, 3, 0.4);
+  background-color: #f4f1ea;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+    url('https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=1000&auto=format&fit=crop'); /* Realistic old paper texture */
+  background-size: cover;
+  background-position: center;
+  padding: 80px 60px;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.5),
+    inset 0 0 50px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
-}
-
-.folded-content::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border: 1px solid #5a0202;
-  margin: 5px;
-  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
 }
 
 .unfolded-container {
