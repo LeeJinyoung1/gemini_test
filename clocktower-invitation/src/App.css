@@ -72,7 +72,8 @@
   opacity: 0; /* Initially hidden */
 }
 
-.folded-container:hover .letter-paper {
+.folded-container:hover .letter-paper,
+.folded-container.opening .letter-paper {
   transform: translateY(-50px); /* Slide up slightly to stick out */
   z-index: 2; /* Still below front (3) but above back */
   opacity: 1; /* Show when hovering */
@@ -121,7 +122,8 @@
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
-.folded-container:hover .envelope-flap-wrapper {
+.folded-container:hover .envelope-flap-wrapper,
+.folded-container.opening .envelope-flap-wrapper {
   transform: rotateX(180deg);
   z-index: 0;
 }
@@ -141,7 +143,9 @@
 
 /* Move content up/fade out on hover to simulate being on the flap */
 .folded-container:hover .invitation-title,
-.folded-container:hover .seal-container {
+.folded-container:hover .seal-container,
+.folded-container.opening .invitation-title,
+.folded-container.opening .seal-container {
   /* On hover: fade out immediately (no delay) over 0.3s */
   transition: opacity 0.3s ease 0s;
   opacity: 0; /* Fade out only title and seal */

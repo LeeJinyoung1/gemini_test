@@ -1,11 +1,21 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import './FoldedInvitation.css';
 import sealImg from '../img/seal.png';
 
 const FoldedInvitation = ({ onUnfold }) => {
+  const [isOpening, setIsOpening] = useState(false);
+
+  const handleClick = () => {
+    if (isOpening) return; // Prevent multiple clicks
+    setIsOpening(true);
+    // Wait for the opening animation to finish before unfolding content
+    setTimeout(() => {
+      onUnfold();
+    }, 800); // 800ms matches the animation duration + slight buffer
+  };
+
   return (
-    <div className="folded-container" onClick={onUnfold}>
+    <div className={`folded-container ${isOpening ? 'opening' : ''}`} onClick={handleClick}>
       <div className="folded-content">
         <div className="envelope-flap-wrapper">
           <div className="envelope-flap"></div>
