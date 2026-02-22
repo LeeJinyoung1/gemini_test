@@ -133,7 +133,8 @@
 
 /* Animate Content (Title, Seal) to fade out */
 .invitation-title, .seal-container {
-  transition: opacity 0.3s;
+  /* Return from hover: wait 0.6s (flap closing time), then fade in over 0.3s */
+  transition: opacity 0.3s ease 0.6s;
   z-index: 5; /* Clearly above the flap (z-index: 1) */
   position: relative;
 }
@@ -141,6 +142,8 @@
 /* Move content up/fade out on hover to simulate being on the flap */
 .folded-container:hover .invitation-title,
 .folded-container:hover .seal-container {
+  /* On hover: fade out immediately (no delay) over 0.3s */
+  transition: opacity 0.3s ease 0s;
   opacity: 0; /* Fade out only title and seal */
 }
 
