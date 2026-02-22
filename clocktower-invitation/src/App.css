@@ -201,3 +201,30 @@
     transform: rotateX(0deg) scale(1);
   }
 }
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .folded-content {
+    width: 320px; /* Smaller width for mobile */
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .unfolded-container {
+    width: 92%; /* Utilize more screen width */
+    margin: 40px 0; /* Reduced vertical margin */
+  }
+
+  .unfolded-content {
+    padding: 30px 20px; /* Reduced padding */
+  }
+
+  .invitation-title {
+    font-size: 1.2rem !important; /* Smaller title font */
+  }
+  
+  .seal-container > div {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
