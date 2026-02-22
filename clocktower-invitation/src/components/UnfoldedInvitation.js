@@ -1,8 +1,8 @@
 
 import React from 'react';
 import './UnfoldedInvitation.css';
-import inviteImg from '../img/invite_img.png';
-import sealImg from '../img/seal.png';
+import inviteImg from '../img/invite_img.jpg';
+import sealImg from '../img/seal.jpg';
 
 const UnfoldedInvitation = () => {
   return (

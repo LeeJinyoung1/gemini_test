@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './FoldedInvitation.css';
-import sealImg from '../img/seal.png';
+import sealImg from '../img/seal.jpg';
 
 const FoldedInvitation = ({ onUnfold }) => {
   const [isOpening, setIsOpening] = useState(false);
