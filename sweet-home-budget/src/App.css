@@ -1,0 +1,535 @@
+
+:root {
+  --primary: #4f46e5;
+  --bg: #f8fafc;
+  --text: #1e293b;
+  --card: #ffffff;
+  --income: #22c55e;
+  --expense: #ef4444;
+  --investment: #f59e0b;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.App {
+  max-width: 500px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: 120px; /* 네비게이션 바 높이 + 여유 공간 확대 */
+}
+
+/* Bottom Navigation */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.nav-item.active {
+  color: var(--primary);
+}
+
+/* UI Components */
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.transaction-item {
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+/* Calendar Styles */
+.calendar-view {
+  padding: 10px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.month-summary-card {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.summary-item.total {
+  border-left: 1px solid #e2e8f0;
+  padding-left: 15px;
+  font-weight: bold;
+}
+
+.income-text { color: var(--income); }
+.expense-text { color: var(--expense); }
+.investment-text { color: var(--investment); }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: #e2e8f0;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.weekday {
+  background-color: #f1f5f9;
+  padding: 8px 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #64748b;
+}
+
+.calendar-day {
+  background-color: white;
+  min-height: 60px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.calendar-day.selected {
+  background-color: #eef2ff;
+  border: 1px solid var(--primary);
+  z-index: 10;
+}
+
+.calendar-day.out-of-period {
+  background-color: #fcfcfc;
+  color: #cbd5e1;
+}
+
+.calendar-day.out-of-period .day-number {
+  color: #cbd5e1;
+}
+
+.calendar-day.empty {
+  background-color: #f8fafc;
+  cursor: default;
+}
+
+.day-number {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1e293b;
+}
+
+.day-summary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.income-small {
+  font-size: 10px;
+  font-weight: bold;
+  color: #16a34a; /* 더 진한 녹색 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+  letter-spacing: -0.5px;
+}
+
+.expense-small {
+  font-size: 10px;
+  font-weight: bold;
+  color: #dc2626; /* 더 진한 빨간색 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+  letter-spacing: -0.5px;
+}
+
+.investment-small {
+  font-size: 10px;
+  font-weight: bold;
+  color: #d97706; /* 더 진한 오렌지색 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+  letter-spacing: -0.5px;
+}
+
+/* Daily Detail Styles */
+.daily-detail-section {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+}
+
+.daily-list-container {
+  max-height: 40vh; /* 화면 높이의 40%로 유동적으로 설정 */
+  overflow-y: auto;
+  padding: 4px;
+  padding-bottom: 80px; /* 내부 스크롤 하단 여백을 크게 주어 가려짐 방지 */
+  -webkit-overflow-scrolling: touch;
+}
+
+.small-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.small-btn.expense {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.small-btn.income {
+  background-color: #dcfce7;
+  color: #22c55e;
+}
+
+.small-btn.investment {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.transaction-list.compact .transaction-item.compact {
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+/* Category Manager Styles */
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s;
+}
+
+.delete-btn:hover {
+  color: #ef4444;
+}
+
+/* Stats Styles */
+.stats-view {
+  padding-bottom: 100px; /* 네비게이션 바 높이 + 여유 공간 */
+}
+
+.mini-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 5px;
+  gap: 5px;
+}
+
+.mini-card .label {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.mini-card .val {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.chart-card {
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.chart-card h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+/* Common Layouts */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #64748b;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.u-name { font-weight: bold; }
+.u-email { font-size: 12px; color: #64748b; }
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.author-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+}
+
+.author-name {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background-color: #64748b;
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Type Selector in Modal */
+.type-selector {
+  display: flex;
+  background-color: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.type-selector button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font-weight: bold;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.type-selector button.active.expense {
+  background-color: #ef4444;
+  color: white;
+}
+
+.type-selector button.active.income {
+  background-color: #22c55e;
+  color: white;
+}
+
+.type-selector button.active.investment {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.login-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.login-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.login-header h1 {
+  margin: 0 0 10px 0;
+  color: var(--primary);
+}
+
+.login-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.login-btn {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
