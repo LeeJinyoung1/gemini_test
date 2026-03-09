@@ -90,28 +90,39 @@ body {
   opacity: 0.5;
 }
 
-/* Modal Styling */
+/* Modal Styling - 재정의 */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
+  align-items: center; /* 기본은 중앙 정렬 */
   justify-content: center;
   z-index: 200;
-  padding: 20px;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+@media (max-height: 700px) {
+  .modal-overlay { align-items: flex-start; } /* 작은 화면에서 상단 잘림 방지 */
 }
 
 .modal-content {
   background: white;
   width: 100%;
   max-width: 400px;
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column; /* 내부 요소 세로 정렬 */
+  position: relative;
 }
 
 .modal-header {
@@ -119,37 +130,136 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 .modal-header h3 {
   margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
 }
 
-.close-btn {
-  background: none;
+.type-selector {
+  display: flex;
+  background-color: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.type-selector button {
+  flex: 1;
+  padding: 8px;
   border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
   color: #64748b;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.type-selector button.active {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.type-selector button.active.expense { color: #ef4444; }
+.type-selector button.active.income { color: #22c55e; }
+.type-selector button.active.investment { color: #f59e0b; }
+
+/* 폼 스크롤 영역 */
+form {
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 0; /* form의 gap으로 대체 */
 }
 
 .form-group label {
   display: block;
-  font-size: 14px;
-  color: #64748b;
-  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  text-transform: uppercase;
 }
 
-.form-group input, .form-group select {
+.form-group input:not([type="checkbox"]), 
+.form-group select {
   width: 100%;
-  padding: 12px;
+  padding: 12px 16px;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 16px;
+  background-color: #f8fafc;
   box-sizing: border-box;
+}
+
+/* 카테고리 칩 디자인 개선 */
+.category-chips-container {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important; /* 3열 유지하되 높이 유연화 */
+  gap: 10px !important;
+  max-height: 220px; /* 스크롤이 더 길어지더라도 잘리지 않게 높이 확대 */
+  overflow-y: auto;
+  padding: 4px;
+  margin-top: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-chip {
+  padding: 10px 6px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+  border: 1.5px solid transparent;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  text-align: center;
+  /* 글자 잘림 방지 로직 */
+  white-space: normal; /* 자동 줄바꿈 허용 */
+  word-break: keep-all; /* 단어 단위로 줄바꿈 */
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* 터치 영역 및 텍스트 공간 확보 */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.category-chip:active {
+  transform: scale(0.95);
+}
+
+.category-chip.selected.expense {
+  background-color: #fee2e2;
+  color: #ef4444;
+  border-color: #fca5a5;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+.category-chip.selected.income {
+  background-color: #dcfce7;
+  color: #22c55e;
+  border-color: #86efac;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+}
+
+.category-chip.selected.investment {
+  background-color: #fef3c7;
+  color: #d97706;
+  border-color: #fcd34d;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
 }
 
 .transaction-item {
@@ -184,23 +294,38 @@ body {
 
 .month-summary-card {
   display: flex;
-  justify-content: space-around;
-  padding: 15px 10px;
+  justify-content: space-between;
+  padding: 12px 6px;
   margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 12px;
+  gap: 2px;
+  box-sizing: border-box;
 }
 
 .summary-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.summary-item span:first-child {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.summary-item span:last-child {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .summary-item.total {
   border-left: 1px solid #e2e8f0;
-  padding-left: 15px;
-  font-weight: bold;
+  padding-left: 2px;
 }
 
 .income-text { color: var(--income); }
@@ -215,27 +340,30 @@ body {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .weekday {
   background-color: #f1f5f9;
-  padding: 8px 0;
+  padding: 6px 0;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: #64748b;
 }
 
 .calendar-day {
   background-color: white;
-  min-height: 60px;
-  padding: 4px;
+  min-height: 50px;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.2s;
+  box-sizing: border-box;
 }
 
 .calendar-day.selected {
@@ -259,9 +387,9 @@ body {
 }
 
 .day-number {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   color: #1e293b;
 }
 
@@ -269,33 +397,56 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 1px;
+  overflow: hidden;
 }
 
-.income-small {
-  font-size: 10px;
+.income-small, .expense-small, .investment-small, .investment-withdrawal-small {
+  font-size: 8px; /* 금액 텍스트 크기 축소 */
   font-weight: bold;
-  color: #16a34a; /* 더 진한 녹색 */
   white-space: nowrap;
   overflow: hidden;
   text-align: right;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.8px;
+  line-height: 1;
+  width: 100%;
 }
 
-.expense-small {
-  font-size: 10px;
-  font-weight: bold;
-  color: #dc2626; /* 더 진한 빨간색 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: right;
-  letter-spacing: -0.5px;
+.income-small { color: #16a34a; }
+.expense-small { color: #dc2626; }
+.investment-small { color: #d97706; }
+.investment-withdrawal-small { color: #92400e; }
+
+/* 아주 작은 화면 (예: iPhone SE) 대응 */
+@media (max-width: 360px) {
+  .month-summary-card {
+    padding: 8px 2px;
+  }
+  .summary-item span:last-child {
+    font-size: 9px;
+  }
+  .day-number {
+    font-size: 11px;
+  }
+  .calendar-day {
+    min-height: 45px;
+  }
 }
 
 .investment-small {
   font-size: 10px;
   font-weight: bold;
   color: #d97706; /* 더 진한 오렌지색 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+  letter-spacing: -0.5px;
+}
+
+.investment-withdrawal-small {
+  font-size: 10px;
+  font-weight: bold;
+  color: #92400e; /* 더 짙은 갈색/황토색 */
   white-space: nowrap;
   overflow: hidden;
   text-align: right;
@@ -532,4 +683,61 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+/* 카테고리 칩 컨테이너 */
+.category-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 140px; /* 기존 180px에서 140px로 조정 */
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-top: 5px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 개별 카테고리 칩 */
+.category-chip {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.category-chip:active {
+  transform: scale(0.95);
+}
+
+.category-chip.selected {
+  font-weight: bold;
+}
+
+.category-chip.selected.expense {
+  background-color: #ef4444;
+  color: white;
+  border-color: #ef4444;
+  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+}
+
+.category-chip.selected.income {
+  background-color: #22c55e;
+  color: white;
+  border-color: #22c55e;
+  box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.3);
+}
+
+.category-chip.selected.investment {
+  background-color: #f59e0b;
+  color: white;
+  border-color: #f59e0b;
+  box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
 }

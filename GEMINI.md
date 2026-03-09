@@ -15,6 +15,11 @@
 - **기술 스택**: Create React App (CRA), React, Vanilla CSS.
 - **상세 규칙**: `rule/clocktower-invitation-dev-notes.md` 참고.
 
+### 🏠 Sweet Home Budget (`sweet-home-budget`)
+- **설명**: 부부가 함께 사용하는 가계부 앱 (투자 누적 관리, 할부/반복 결제 지원).
+- **기술 스택**: Create React App (CRA), React, Firebase (Auth & Firestore), XLSX.
+- **상세 규칙**: `rule/sweet-home-budget-dev-notes.md` 참고.
+
 ## 🤖 Gemini CLI 개발 지침 (Mandatory)
 
 이 프로젝트에서 Gemini CLI는 다음 규칙을 **최우선**으로 준수해야 합니다.
@@ -26,7 +31,7 @@
    - 모든 수정 후에는 `npm run build`가 정상적으로 동작하는지 확인해야 합니다.
    - 정적 호스팅(Apache, GitHub Pages 등)을 고려하여 파일 경로 설정을 신중히 다루십시오.
 5. **보안**: API 키, 개인 정보 등이 포함된 파일이 노출되거나 커밋되지 않도록 주의하십시오.
-6. **개발 기록 유지**: 개발을 진행할 때마다 진행된 내용을 `rule/` 폴더 아래 해당 프로젝트의 `.md` 파일에 상세히 기록하거나 업데이트하여, 다음 개발 시 참고할 수 있도록 하십시오.
+6. **개발 기록 유지 (필수)**: 작업을 진행할 때마다 새롭게 추가된 기능, 수정된 로직, 디자인 규칙 등 **중요 내용을 `rule/` 폴더 내 해당 프로젝트의 개발 노트(`.md`)에 즉시 업데이트**하십시오. 이는 다음 개발 시 연속성을 유지하기 위한 필수 절차입니다.
 
 ## 🚀 시작하기
 

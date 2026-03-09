@@ -3,7 +3,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// TODO: Firebase 콘솔에서 프로젝트 설정 정보를 복사하여 아래에 붙여넣으세요.
+/**
+ * Firebase 프로젝트 설정 정보
+ */
 const firebaseConfig = {
   apiKey: "AIzaSyB2SufBJD7HYyKLLKDqJ5fzW6iwfqAfWMQ",
   authDomain: "household-account-book-e1337.firebaseapp.com",
@@ -14,8 +16,11 @@ const firebaseConfig = {
   measurementId: "G-BG2L79F9RJ"
 };
 
-// Initialize Firebase
+// Firebase 앱 초기화
 const app = initializeApp(firebaseConfig);
+
+// 인증(Auth) 및 데이터베이스(Firestore) 인스턴스 내보내기
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
 export default app;
